@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const ControleRemoto());
@@ -16,7 +17,23 @@ class ControleRemoto extends StatelessWidget {
 }
 
 class PaginaControle extends StatelessWidget {
-  const PaginaControle({Key? key}) : super(key: key);
+  const PaginaControle();
+
+  void mooveMouseUp() {
+    http.get(Uri.parse('http://192.168.5.192:8000/up'));
+  }
+
+  void mooveMouseDown() {
+    http.get(Uri.parse('http://192.168.5.192:8000/down'));
+  }
+
+  void mooveMouseLeft() {
+    http.get(Uri.parse('http://192.168.5.192:8000/left'));
+  }
+
+  void mooveMouseRight() {
+    http.get(Uri.parse('http://192.168.5.192:8000/right'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +50,11 @@ class PaginaControle extends StatelessWidget {
                   children: [
                     Ink(
                       decoration: ShapeDecoration(
-                          shape: CircleBorder(), color: Colors.blue),
+                          shape: CircleBorder(), color: Colors.red),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: mooveMouseUp,
                         icon: Icon(Icons.circle),
                         color: Colors.white,
-                        focusColor: Colors.black,
                       ),
                     )
                   ],
@@ -50,7 +66,7 @@ class PaginaControle extends StatelessWidget {
                       decoration: ShapeDecoration(
                           shape: CircleBorder(), color: Colors.blue),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: mooveMouseLeft,
                         icon: Icon(Icons.circle),
                         color: Colors.white,
                         focusColor: Colors.black,
@@ -61,9 +77,9 @@ class PaginaControle extends StatelessWidget {
                     ),
                     Ink(
                       decoration: ShapeDecoration(
-                          shape: CircleBorder(), color: Colors.blue),
+                          shape: CircleBorder(), color: Colors.yellow),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: mooveMouseRight,
                         icon: Icon(Icons.circle),
                         color: Colors.white,
                         focusColor: Colors.black,
@@ -76,9 +92,9 @@ class PaginaControle extends StatelessWidget {
                   children: [
                     Ink(
                       decoration: ShapeDecoration(
-                          shape: CircleBorder(), color: Colors.blue),
+                          shape: CircleBorder(), color: Colors.green),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: mooveMouseDown,
                         icon: Icon(Icons.circle),
                         color: Colors.white,
                         focusColor: Colors.black,
