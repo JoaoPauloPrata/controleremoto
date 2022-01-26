@@ -3,11 +3,19 @@ from fastapi import FastAPI
 import uvicorn
 
 app = FastAPI()
-
-@app.get('/')
-def raiz():
-    mouse = Controller()
+mouse = Controller()
+@app.get('/left')
+def left():
+    mouse.move(-10,0)
+@app.get('/right')
+def right():
     mouse.move(10,0)
+@app.get('/up')
+def up():
+    mouse.move(0,10)
+@app.get('/down')
+def down():
+    mouse.move(0,-10)
 
 #mouse.position = (0, 0)
 # mouse.click(Button.left, 2);
