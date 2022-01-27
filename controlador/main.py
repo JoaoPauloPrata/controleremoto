@@ -1,6 +1,9 @@
+from threading import *
+import time
 from pynput.mouse import Button, Controller
 from fastapi import FastAPI
 import uvicorn
+
 
 app = FastAPI()
 mouse = Controller()
@@ -12,10 +15,13 @@ def right():
     mouse.move(10,0)
 @app.get('/up')
 def up():
-    mouse.move(0,-10)
+    mouse.move(0,-10).start()
 @app.get('/down')
 def down():
     mouse.move(0,10)
+
+
+
 
 #mouse.position = (0, 0)
 # mouse.click(Button.left, 2);
