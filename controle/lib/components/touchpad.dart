@@ -32,6 +32,18 @@ class _MousePadState extends State<MousePad> {
     await http.post(Uri.parse('http://192.168.5.192:8000/mouseclick'));
   }
 
+  void backSpace() async {
+    await http.post(Uri.parse('http://192.168.5.192:8000/backspace'));
+  }
+
+  void sendKey(String key) async {
+    await http.post(Uri.parse('http://192.168.5.192:8000/presskey'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{"keyPressed": key}));
+  }
+
   void mouseScroll(double scrollMoovement) async {
     await http.post(Uri.parse('http://192.168.5.192:8000/mousescroll'),
         headers: <String, String>{
@@ -55,8 +67,11 @@ class _MousePadState extends State<MousePad> {
 
   Offset atualPosition = Offset(0, 0);
   Offset previousPosition = Offset(0, 0);
+  String keyboardValue = "";
+  String backSpacePress = "A";
+  String previousKeyboardValue = "";
   bool firstMouseMoove = true;
-
+  bool firstKeyboardTouch = false;
   @override
   Widget build(BuildContext context) {
     bool isLandscape =
@@ -221,9 +236,34 @@ class _MousePadState extends State<MousePad> {
                       height: isLandscape ? 50 : 35,
                       width: leftButtonWidth,
                     ),
-                  )
+                  ),
                 ],
               ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 100,
+                width: 300,
+                child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      previousKeyboardValue = keyboardValue;
+                      keyboardValue = value;
+                      if (keyboardValue.length < previousKeyboardValue.length) {
+                        backSpace();
+                      } else {
+                        if (value.length >= 1) sendKey(value[value.length - 1]);
+                      }
+                      value = "";
+                    });
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Abrir Teclado',
+                  ),
+                ),
+              )
             ],
           ),
         ],
