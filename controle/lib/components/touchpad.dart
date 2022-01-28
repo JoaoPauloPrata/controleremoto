@@ -56,10 +56,24 @@ class _MousePadState extends State<MousePad> {
   Offset atualPosition = Offset(0, 0);
   Offset previousPosition = Offset(0, 0);
   bool firstMouseMoove = true;
+
   @override
   Widget build(BuildContext context) {
+    bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    double touchPadWidth = MediaQuery.of(context).size.width * 0.8;
+    double touchPadHeight = isLandscape
+        ? MediaQuery.of(context).size.height * 0.6
+        : MediaQuery.of(context).size.height * 0.3;
+    double leftButtonWidth = MediaQuery.of(context).size.width * 0.440;
+    double rightButtonWidth = MediaQuery.of(context).size.width * 0.440;
+    double scrollAreaHeight = isLandscape
+        ? MediaQuery.of(context).size.height * 0.6
+        : MediaQuery.of(context).size.height * 0.3;
+    double scrollAreaWidth = MediaQuery.of(context).size.width * 0.08;
+
     return Container(
-      color: Color(0xFF0F0F0F),
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -82,13 +96,11 @@ class _MousePadState extends State<MousePad> {
                             previousPosition = atualPosition;
                             atualPosition = details.localPosition;
                           }
-
+                          //Evitando que a função de mecher o mouse seja invocada fora da area do touchpad
                           if (details.localPosition.dx > 0 &&
                               details.localPosition.dy > 0 &&
-                              details.localPosition.dy <
-                                  (MediaQuery.of(context).size.height * 0.3) &&
-                              details.localPosition.dx <
-                                  (MediaQuery.of(context).size.width * 0.9)) {
+                              details.localPosition.dy < (touchPadHeight) &&
+                              details.localPosition.dx < (touchPadWidth)) {
                             mooveMouse(atualPosition.dx - previousPosition.dx,
                                 atualPosition.dy - previousPosition.dy);
                           }
@@ -101,15 +113,15 @@ class _MousePadState extends State<MousePad> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Color(0xFF343535),
+                          color: Colors.blue,
                           border: Border.all(
-                            color: Color(0xFFF8220F),
+                            color: Color(0xFF00417A),
                             width: 3,
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: touchPadHeight,
+                        width: touchPadWidth,
                       ),
                     ),
                   ),
@@ -128,13 +140,11 @@ class _MousePadState extends State<MousePad> {
                           previousPosition = atualPosition;
                           atualPosition = details.localPosition;
                         }
-
+                        //Evitando que a função de mover o scroll seja ativada fora da area do scroll
                         if (details.localPosition.dx > 0 &&
                             details.localPosition.dy > 0 &&
-                            details.localPosition.dy <
-                                (MediaQuery.of(context).size.height * 0.3) &&
-                            details.localPosition.dx <
-                                (MediaQuery.of(context).size.width * 0.9)) {
+                            details.localPosition.dy < (scrollAreaHeight) &&
+                            details.localPosition.dx < (scrollAreaWidth)) {
                           mouseScroll(previousPosition.dy - atualPosition.dy);
                         }
                       });
@@ -147,15 +157,15 @@ class _MousePadState extends State<MousePad> {
                     child: GestureDetector(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Color(0xFF343535),
+                          color: Colors.blue,
                           border: Border.all(
-                            color: Color(0xFFF8220F),
+                            color: Color(0xFF00417A),
                             width: 3,
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        width: MediaQuery.of(context).size.width * 0.08,
+                        height: scrollAreaHeight,
+                        width: scrollAreaWidth,
                       ),
                     ),
                   ),
@@ -176,19 +186,21 @@ class _MousePadState extends State<MousePad> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFF343535),
+                        color: Colors.blue,
                         border: Border.all(
-                          color: Color(0xFFF8220F),
+                          color: Color(0xFF00417A),
                           width: 3,
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      height: 35,
+                      height: isLandscape ? 50 : 35,
                       width: MediaQuery.of(context).size.width * 0.440,
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.02,
+                    width: isLandscape
+                        ? 20
+                        : MediaQuery.of(context).size.width * 0.025,
                   ),
                   GestureDetector(
                     onTapDown: (_) {
@@ -199,15 +211,15 @@ class _MousePadState extends State<MousePad> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFF343535),
+                        color: Colors.blue,
                         border: Border.all(
-                          color: Color(0xFFF8220F),
+                          color: Color(0xFF00417A),
                           width: 3,
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      height: 35,
-                      width: MediaQuery.of(context).size.width * 0.440,
+                      height: isLandscape ? 50 : 35,
+                      width: leftButtonWidth,
                     ),
                   )
                 ],

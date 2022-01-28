@@ -13,7 +13,18 @@ class ControleRemoto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MousePad(),
+      home: Scaffold(
+          body: MousePad(),
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.keyboard),
+              ),
+              IconButton(onPressed: () {}, icon: Icon(Icons.gamepad))
+            ],
+            toolbarHeight: 50,
+          )),
     );
   }
 }
