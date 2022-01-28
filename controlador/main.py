@@ -8,7 +8,8 @@ from pydantic import BaseModel
 class Moove(BaseModel):
     mooveAxisX: float
     mooveAxisY: float
-
+class ScrollMoove(BaseModel):
+    moove: float
 app = FastAPI()
 mouse = Controller()
 @app.post('/left')
@@ -39,15 +40,16 @@ def unPressRightButton():
 @app.post('/pressleft')
 def pressLeftButton():
     mouse.press(Button.left)
+ 
 @app.post('/unpressleft')
 def unPressLeftButton():
     mouse.release(Button.left)
 @app.post('/moovemouse')
 def mooveMouse(moove: Moove):
     mouse.move(moove.mooveAxisX, moove.mooveAxisY)
-@app.post('/moousescrool')
-def mouseScrool(moove: Moove):
-    mouse.scrool(0, 2)
+@app.post('/mousescroll')
+def mouseScrool(moove: ScrollMoove):
+    mouse.scroll(0, moove.moove)
 
 
 #mouse.position = (0, 0)

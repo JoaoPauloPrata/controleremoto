@@ -1,4 +1,4 @@
-import 'package:controle/components/mousepad.dart';
+import 'package:controle/components/touchpad.dart';
 import 'package:flutter/material.dart';
 
 import 'components/arrosw_buttons.dart';
