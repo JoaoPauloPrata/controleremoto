@@ -81,13 +81,24 @@ class _MousePadState extends State<MousePad> {
     double touchPadWidth = MediaQuery.of(context).size.width * 0.8;
     double touchPadHeight = isLandscape
         ? MediaQuery.of(context).size.height * 0.6
-        : MediaQuery.of(context).size.height * 0.3;
-    double leftButtonWidth = MediaQuery.of(context).size.width * 0.440;
-    double rightButtonWidth = MediaQuery.of(context).size.width * 0.440;
+        : MediaQuery.of(context).size.height * 0.7;
+    double leftButtonWidth = isLandscape
+        ? MediaQuery.of(context).size.width * 0.400
+        : MediaQuery.of(context).size.width * 0.375;
+    double rightButtonWidth = isLandscape
+        ? MediaQuery.of(context).size.width * 0.400
+        : MediaQuery.of(context).size.width * 0.375;
+    ;
+    double leftButtonHeight = isLandscape
+        ? MediaQuery.of(context).size.height * 0.100
+        : MediaQuery.of(context).size.height * 0.08;
+    double rightButtonHeight = isLandscape
+        ? MediaQuery.of(context).size.height * 0.100
+        : MediaQuery.of(context).size.height * 0.08;
     double scrollAreaHeight = isLandscape
         ? MediaQuery.of(context).size.height * 0.6
-        : MediaQuery.of(context).size.height * 0.3;
-    double scrollAreaWidth = MediaQuery.of(context).size.width * 0.08;
+        : MediaQuery.of(context).size.height * 0.7;
+    double scrollAreaWidth = MediaQuery.of(context).size.width * 0.1;
 
     String initialValueText = "";
     for (int i = 0; i < 1000; i++) {
@@ -99,6 +110,7 @@ class _MousePadState extends State<MousePad> {
       ..text = initialValueText;
     controllerText.selection = TextSelection.fromPosition(
         TextPosition(offset: controllerText.text.length));
+    FocusNode keyBoardFocus = FocusNode();
     return Container(
       color: Colors.white,
       child: Row(
@@ -202,7 +214,6 @@ class _MousePadState extends State<MousePad> {
                 height: 5,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
                     onTapDown: (_) {
@@ -220,14 +231,27 @@ class _MousePadState extends State<MousePad> {
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      height: isLandscape ? 50 : 35,
-                      width: MediaQuery.of(context).size.width * 0.440,
+                      height: leftButtonHeight,
+                      width: rightButtonWidth,
                     ),
                   ),
-                  SizedBox(
-                    width: isLandscape
-                        ? 20
-                        : MediaQuery.of(context).size.width * 0.025,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      border: Border.all(
+                        color: Color(0xFF00417A),
+                        width: 3,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    height: leftButtonHeight,
+                    width: MediaQuery.of(context).size.width * 0.150,
+                    child: IconButton(
+                        color: Colors.white,
+                        onPressed: () {
+                          keyBoardFocus.requestFocus();
+                        },
+                        icon: Icon(Icons.keyboard)),
                   ),
                   GestureDetector(
                     onTapDown: (_) {
@@ -245,38 +269,45 @@ class _MousePadState extends State<MousePad> {
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      height: isLandscape ? 50 : 35,
+                      height: rightButtonHeight,
                       width: leftButtonWidth,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
               Container(
-                height: 100,
-                width: 300,
-                child: TextField(
-                  controller: controllerText,
-                  onChanged: (value) {
-                    setState(() {
-                      if (previousKeyboardValue.length > value.length) {
-                        backSpace();
-                      } else {
-                        sendKey(value[value.length - 1]);
-                      }
-                    });
-                  },
-                  onSubmitted: (_) {
-                    enter();
-                  },
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Abrir Teclado',
+                height: 1,
+                width: 1,
+                child: Stack(children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.white,
+                    height: MediaQuery.of(context).size.height,
                   ),
-                ),
-              )
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Visibility(
+                      visible: true,
+                      child: TextField(
+                        focusNode: keyBoardFocus,
+                        controller: controllerText,
+                        onChanged: (value) {
+                          setState(() {
+                            if (previousKeyboardValue.length > value.length) {
+                              backSpace();
+                            } else {
+                              sendKey(value[value.length - 1]);
+                            }
+                          });
+                        },
+                        onSubmitted: (_) {
+                          enter();
+                        },
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
             ],
           ),
         ],

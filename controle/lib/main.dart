@@ -14,6 +14,7 @@ class ControleRemoto extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: MousePad(),
           appBar: AppBar(
             actions: [
