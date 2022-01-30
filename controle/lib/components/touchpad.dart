@@ -36,6 +36,10 @@ class _MousePadState extends State<MousePad> {
     await http.post(Uri.parse('http://192.168.5.192:8000/backspace'));
   }
 
+  void enter() async {
+    await http.post(Uri.parse('http://192.168.5.192:8000/enter'));
+  }
+
   void sendKey(String key) async {
     await http.post(Uri.parse('http://192.168.5.192:8000/presskey'),
         headers: <String, String>{
@@ -67,9 +71,7 @@ class _MousePadState extends State<MousePad> {
 
   Offset atualPosition = Offset(0, 0);
   Offset previousPosition = Offset(0, 0);
-  String keyboardValue = "";
-  String backSpacePress = "A";
-  String previousKeyboardValue = "";
+
   bool firstMouseMoove = true;
   bool firstKeyboardTouch = false;
   @override
@@ -87,6 +89,16 @@ class _MousePadState extends State<MousePad> {
         : MediaQuery.of(context).size.height * 0.3;
     double scrollAreaWidth = MediaQuery.of(context).size.width * 0.08;
 
+    String initialValueText = "";
+    for (int i = 0; i < 1000; i++) {
+      initialValueText = initialValueText + " ";
+    }
+    String keyboardValue = initialValueText;
+    String previousKeyboardValue = initialValueText;
+    TextEditingController controllerText = TextEditingController()
+      ..text = initialValueText;
+    controllerText.selection = TextSelection.fromPosition(
+        TextPosition(offset: controllerText.text.length));
     return Container(
       color: Colors.white,
       child: Row(
@@ -239,26 +251,27 @@ class _MousePadState extends State<MousePad> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
                 height: 100,
                 width: 300,
                 child: TextField(
+                  controller: controllerText,
                   onChanged: (value) {
                     setState(() {
-                      previousKeyboardValue = keyboardValue;
-                      keyboardValue = value;
-                      if (keyboardValue.length < previousKeyboardValue.length) {
+                      if (previousKeyboardValue.length > value.length) {
                         backSpace();
                       } else {
-                        if (value.length >= 1) sendKey(value[value.length - 1]);
+                        sendKey(value[value.length - 1]);
                       }
-                      value = "";
                     });
                   },
-                  decoration: InputDecoration(
+                  onSubmitted: (_) {
+                    enter();
+                  },
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Abrir Teclado',
                   ),

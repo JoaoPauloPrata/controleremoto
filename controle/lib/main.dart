@@ -17,10 +17,6 @@ class ControleRemoto extends StatelessWidget {
           body: MousePad(),
           appBar: AppBar(
             actions: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.keyboard),
-              ),
               IconButton(onPressed: () {}, icon: Icon(Icons.gamepad)),
             ],
             toolbarHeight: 50,

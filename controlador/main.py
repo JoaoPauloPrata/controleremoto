@@ -52,6 +52,9 @@ def mouseScrool(moove: ScrollMoove):
 @app.post('/backspace')
 def backspace():
     keyboard.press(Key.backspace)
+@app.post('/enter')
+def enter():
+    keyboard.press(Key.enter)    
 @app.post('/presskey')
 def pressKey(key: KeyboarComands):
     keyboard.press(key.keyPressed)
