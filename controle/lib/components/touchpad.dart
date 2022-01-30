@@ -54,7 +54,7 @@ class _MousePadState extends State<MousePad> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, double>{
-          "moove": scrollMoovement,
+          "moove": scrollMoovement / 5,
         }));
   }
 
@@ -249,7 +249,11 @@ class _MousePadState extends State<MousePad> {
                     child: IconButton(
                         color: Colors.white,
                         onPressed: () {
-                          keyBoardFocus.requestFocus();
+                          if (keyBoardFocus.hasFocus) {
+                            keyBoardFocus.unfocus();
+                            keyBoardFocus.requestFocus();
+                          } else
+                            keyBoardFocus.requestFocus();
                         },
                         icon: Icon(Icons.keyboard)),
                   ),
