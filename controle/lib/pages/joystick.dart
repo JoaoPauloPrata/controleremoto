@@ -4,6 +4,7 @@ import 'package:controle/components/circle_buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
@@ -29,17 +30,12 @@ class _JoysTickState extends State<JoysTick> {
         child: Row(
           children: [
             Flexible(
-              flex: 1,
+              flex: 2,
               fit: FlexFit.tight,
               child: arrows_buttons(),
             ),
             Flexible(
-              flex: 2,
-              fit: FlexFit.tight,
-              child: Analogic(),
-            ),
-            Flexible(
-              flex: 2,
+              flex: 1,
               fit: FlexFit.tight,
               child: circleButtonsArea(),
             ),

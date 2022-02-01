@@ -1,3 +1,4 @@
+import 'package:controle/infra/control_requests.dart';
 import 'package:flutter/material.dart';
 
 Column circleButtonsArea() {
@@ -5,43 +6,47 @@ Column circleButtonsArea() {
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
-          height: 70,
-          width: 70,
-        )
+        CircleButton(Colors.blue, "q"),
       ],
     ),
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          decoration:
-              BoxDecoration(shape: BoxShape.circle, color: Colors.green),
-          height: 70,
-          width: 70,
-        ),
+        CircleButton(Colors.red, "e"),
         SizedBox(
           height: 70,
           width: 70,
         ),
-        Container(
-          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-          height: 70,
-          width: 70,
-        )
+        CircleButton(Colors.green, "r"),
       ],
     ),
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          decoration:
-              BoxDecoration(shape: BoxShape.circle, color: Colors.yellow),
-          height: 70,
-          width: 70,
-        )
+        CircleButton(Colors.yellow, "f"),
       ],
     )
   ]);
+}
+
+class CircleButton extends StatelessWidget {
+  CircleButton(Color this.buttonColor, String this.pressedKey);
+  Color buttonColor;
+  String pressedKey;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (details) {
+        ControlRequests().sendComand('\presskey', {"keyPressed": pressedKey});
+      },
+      onTapUp: (details) {
+        ControlRequests().sendComand('unpresskey', {"keyPressed": pressedKey});
+      },
+      child: Container(
+        decoration: BoxDecoration(shape: BoxShape.circle, color: buttonColor),
+        height: 80,
+        width: 80,
+      ),
+    );
+  }
 }

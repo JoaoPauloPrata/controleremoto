@@ -30,6 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.3
+  control_pad: ^1.1.1+1
 
 
   # The following adds the Cupertino Icons font to your application.

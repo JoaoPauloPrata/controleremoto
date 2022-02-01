@@ -14,7 +14,10 @@ class ControleRemoto extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: JoysTick(),
+        appBar: AppBar(
+          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.gamepad))],
+        ),
+        body: MousePad(),
       ),
     );
   }

@@ -55,9 +55,15 @@ def backspace():
 @app.post('/enter')
 def enter():
     keyboard.press(Key.enter)    
-@app.post('/presskey')
-def pressKey(key: KeyboarComands):
+@app.post('/pressandunpresskey')
+def pressAndUnpressKey(key: KeyboarComands):
     keyboard.press(key.keyPressed)
     keyboard.release(key.keyPressed)
 
-
+@app.post('/presskey')
+def pressKey(key: KeyboarComands):
+    keyboard.press(key.keyPressed)
+@app.post('/unpresskey')
+def unPressKey(key: KeyboarComands):
+    keyboard.release(key.keyPressed)
+    

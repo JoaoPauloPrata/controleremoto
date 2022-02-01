@@ -41,7 +41,7 @@ class _MousePadState extends State<MousePad> {
   }
 
   void sendKey(String key) async {
-    await http.post(Uri.parse('http://192.168.5.192:8000/presskey'),
+    await http.post(Uri.parse('http://192.168.5.192:8000/pressandunpresskey'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
