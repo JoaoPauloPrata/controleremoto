@@ -3,7 +3,7 @@ import 'package:controle/pages/touchpad.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const ControleRemoto());
+  runApp(MaterialApp(home: ControleRemoto()));
 }
 
 class ControleRemoto extends StatelessWidget {
@@ -11,14 +11,6 @@ class ControleRemoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.gamepad))],
-        ),
-        body: MousePad(),
-      ),
-    );
+    return MousePad();
   }
 }
