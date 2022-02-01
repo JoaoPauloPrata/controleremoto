@@ -1,7 +1,6 @@
-import 'package:controle/components/touchpad.dart';
+import 'package:controle/pages/joystick.dart';
+import 'package:controle/pages/touchpad.dart';
 import 'package:flutter/material.dart';
-
-import 'components/arrosw_buttons.dart';
 
 void main() {
   runApp(const ControleRemoto());
@@ -14,14 +13,9 @@ class ControleRemoto extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: MousePad(),
-          appBar: AppBar(
-            actions: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.gamepad)),
-            ],
-            toolbarHeight: 50,
-          )),
+        resizeToAvoidBottomInset: false,
+        body: JoysTick(),
+      ),
     );
   }
 }
