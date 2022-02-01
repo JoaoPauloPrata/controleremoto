@@ -36,7 +36,7 @@ class _JoysTickState extends State<JoysTick> {
             Flexible(
               flex: 2,
               fit: FlexFit.tight,
-              child: analogic(),
+              child: Analogic(),
             ),
             Flexible(
               flex: 2,
