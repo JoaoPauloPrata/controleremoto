@@ -1,4 +1,5 @@
 import 'package:controle/pages/joystick.dart';
+import 'package:controle/pages/teste_oystick.dart';
 import 'package:controle/pages/touchpad.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,6 @@ class ControleRemoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MousePad();
+    return Analogico();
   }
 }
