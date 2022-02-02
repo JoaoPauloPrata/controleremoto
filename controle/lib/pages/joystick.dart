@@ -5,7 +5,6 @@ import 'package:controle/components/middles_buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
@@ -32,24 +31,24 @@ class _JoysTickState extends State<JoysTick> {
     bool isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: !isLandscape ? 50 : 0,
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.settings))],
+      ),
       body: Container(
         color: Colors.white,
         child: !isLandscape
-            ? Container(
-                color: Colors.white,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Vire o dispositivo para entrar no modo gamer",
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ))
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Vire o dispositivo para entrar no modo gamer",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ],
+              )
             : Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Row(

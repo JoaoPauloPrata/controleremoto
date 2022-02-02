@@ -123,10 +123,15 @@ class _MousePadState extends State<MousePad> {
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {
-                _selectPage(context);
-              },
-              icon: Icon(Icons.gamepad))
+            onPressed: () {
+              _selectPage(context);
+            },
+            icon: Icon(Icons.gamepad),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.settings),
+          )
         ],
       ),
       body: Container(
@@ -240,6 +245,9 @@ class _MousePadState extends State<MousePad> {
                       onTapUp: (_) {
                         unPressLeftButton();
                       },
+                      onPanCancel: () {
+                        unPressLeftButton();
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.blue,
@@ -280,6 +288,9 @@ class _MousePadState extends State<MousePad> {
                         pressRightButton();
                       },
                       onTapUp: (_) {
+                        unPressRightButton();
+                      },
+                      onTapCancel: () {
                         unPressRightButton();
                       },
                       child: Container(

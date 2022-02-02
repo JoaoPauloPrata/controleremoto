@@ -42,10 +42,20 @@ class CircleButton extends StatelessWidget {
       onTapUp: (details) {
         ControlRequests().sendComand('unpresskey', {"keyPressed": pressedKey});
       },
+      onTapCancel: () {
+        ControlRequests().sendComand('unpresskey', {"keyPressed": pressedKey});
+      },
       child: Container(
         decoration: BoxDecoration(shape: BoxShape.circle, color: buttonColor),
         height: 80,
         width: 80,
+        child: Center(
+          child: Text(
+            pressedKey.toUpperCase(),
+            style: TextStyle(fontSize: 30, color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+        ),
       ),
     );
   }
