@@ -70,10 +70,6 @@ class _MousePadState extends State<MousePad> {
         }));
   }
 
-  Offset atualPosition = Offset(0, 0);
-  Offset previousPosition = Offset(0, 0);
-
-  bool firstMouseMoove = true;
   bool firstKeyboardTouch = false;
   @override
   Widget build(BuildContext context) {
@@ -150,27 +146,13 @@ class _MousePadState extends State<MousePad> {
                       child: Listener(
                         onPointerMove: (details) {
                           setState(() {
-                            if (firstMouseMoove) {
-                              previousPosition = details.localPosition;
-                              atualPosition = details.localPosition;
-                              firstMouseMoove = false;
-                            } else {
-                              previousPosition = atualPosition;
-                              atualPosition = details.localPosition;
-                            }
                             //Evitando que a função de mecher o mouse seja invocada fora da area do touchpad
                             if (details.localPosition.dx > 0 &&
                                 details.localPosition.dy > 0 &&
                                 details.localPosition.dy < (touchPadHeight) &&
                                 details.localPosition.dx < (touchPadWidth)) {
-                              mooveMouse(atualPosition.dx - previousPosition.dx,
-                                  atualPosition.dy - previousPosition.dy);
+                              mooveMouse(details.delta.dx, details.delta.dy);
                             }
-                          });
-                        },
-                        onPointerUp: (details) {
-                          setState(() {
-                            firstMouseMoove = true;
                           });
                         },
                         child: Container(
@@ -194,26 +176,13 @@ class _MousePadState extends State<MousePad> {
                     Listener(
                       onPointerMove: (details) {
                         setState(() {
-                          if (firstMouseMoove) {
-                            previousPosition = details.localPosition;
-                            atualPosition = details.localPosition;
-                            firstMouseMoove = false;
-                          } else {
-                            previousPosition = atualPosition;
-                            atualPosition = details.localPosition;
-                          }
                           //Evitando que a função de mover o scroll seja ativada fora da area do scroll
                           if (details.localPosition.dx > 0 &&
                               details.localPosition.dy > 0 &&
                               details.localPosition.dy < (scrollAreaHeight) &&
                               details.localPosition.dx < (scrollAreaWidth)) {
-                            mouseScroll(previousPosition.dy - atualPosition.dy);
+                            mouseScroll(details.delta.dx - details.delta.dy);
                           }
-                        });
-                      },
-                      onPointerUp: (_) {
-                        setState(() {
-                          firstMouseMoove = true;
                         });
                       },
                       child: GestureDetector(
