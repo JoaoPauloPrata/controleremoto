@@ -1,5 +1,6 @@
 from starlette.requests import Request
-from models.KeyboardControls import *
+from starlette.responses import JSONResponse
+
 from pynput.keyboard import Key
 from pynput.keyboard import  Controller as keyBoard
 
@@ -10,20 +11,28 @@ from infra.server import *
 #KEYBOARD FUNCTIONS
 
 # @app.post('/backspace')
-def backspace():
+async def backspace(request: Request):
+
     keyboard.press(Key.backspace)
+    return JSONResponse({"response": "succsess"}) 
 # @app.post('/enter')
-def enter(request: Request):
-    keyboard.press(Key.enter)    
+async def enter(request: Request):
+    keyboard.press(Key.enter)
+    return JSONResponse({"response": "succsess"}) 
     
 # @app.post('/pressandunpresskey')
-def pressAndUnpressKey(key: KeyboarComands):
-    keyboard.press(key.keyPressed)
-    keyboard.release(key.keyPressed)
-
+async def pressAndUnpressKey(request: Request):
+    data = await request.json() 
+    keyboard.press(data["keyPressed"])
+    keyboard.release(data["keyPressed"])
+    return JSONResponse({"response": "succsess"}) 
 # @app.post('/presskey')
-def pressKey(key: KeyboarComands):
-    keyboard.press(key.keyPressed)
+async def pressKey(request: Request):
+    data = await request.json()
+    keyboard.press(data["keyPressed"])
+    return JSONResponse({"response": "succsess"}) 
 # @app.post('/unpresskey')
-def unPressKey(key: KeyboarComands):
-    keyboard.release(key.keyPressed)
+async def unPressKey(request: Request):
+    data = await request.json()
+    keyboard.release(data["keyPressed"])
+    return JSONResponse({"response": "succsess"}) 
