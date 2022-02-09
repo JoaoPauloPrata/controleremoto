@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:controle/infra/control_requests.dart';
 import 'package:controle/pages/joystick.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,63 +14,6 @@ class MousePad extends StatefulWidget {
 }
 
 class _MousePadState extends State<MousePad> {
-  void pressRightButton() async {
-    await http.post(Uri.parse('http://192.168.5.192:8000/pressright'));
-  }
-
-  void unPressRightButton() async {
-    await http.post(Uri.parse('http://192.168.5.192:8000/unpressright'));
-  }
-
-  void pressLeftButton() async {
-    await http.post(Uri.parse('http://192.168.5.192:8000/pressleft'));
-  }
-
-  void unPressLeftButton() async {
-    await http.post(Uri.parse('http://192.168.5.192:8000/unpressleft'));
-  }
-
-  void mouseClick() async {
-    await http.post(Uri.parse('http://192.168.5.192:8000/mouseclick'));
-  }
-
-  void backSpace() async {
-    await http.post(Uri.parse('http://192.168.5.192:8000/backspace'));
-  }
-
-  void enter() async {
-    await http.post(Uri.parse('http://192.168.5.192:8000/enter'));
-  }
-
-  void sendKey(String key) async {
-    await http.post(Uri.parse('http://192.168.5.192:8000/pressandunpresskey'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{"keyPressed": key}));
-  }
-
-  void mouseScroll(double scrollMoovement) async {
-    await http.post(Uri.parse('http://192.168.5.192:8000/mousescroll'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, double>{
-          "moove": scrollMoovement / 5,
-        }));
-  }
-
-  void mooveMouse(double axisXmoove, double axisYmoove) async {
-    await http.post(Uri.parse('http://192.168.5.192:8000/moovemouse'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, double>{
-          "mooveAxisX": axisXmoove * 3,
-          "mooveAxisY": axisYmoove * 3
-        }));
-  }
-
   bool firstKeyboardTouch = false;
   @override
   Widget build(BuildContext context) {
@@ -142,7 +86,9 @@ class _MousePadState extends State<MousePad> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: mouseClick,
+                      onTap: () {
+                        ControlRequests().sendComand('mouseclick', null);
+                      },
                       child: Listener(
                         onPointerMove: (details) {
                           setState(() {
@@ -151,7 +97,10 @@ class _MousePadState extends State<MousePad> {
                                 details.localPosition.dy > 0 &&
                                 details.localPosition.dy < (touchPadHeight) &&
                                 details.localPosition.dx < (touchPadWidth)) {
-                              mooveMouse(details.delta.dx, details.delta.dy);
+                              ControlRequests().sendComand('moovemouse', {
+                                "mooveAxisX": details.delta.dx,
+                                "mooveAxisY": details.delta.dy
+                              });
                             }
                           });
                         },
@@ -181,7 +130,8 @@ class _MousePadState extends State<MousePad> {
                               details.localPosition.dy > 0 &&
                               details.localPosition.dy < (scrollAreaHeight) &&
                               details.localPosition.dx < (scrollAreaWidth)) {
-                            mouseScroll(details.delta.dx - details.delta.dy);
+                            ControlRequests().sendComand('mousescroll',
+                                {"moove": details.delta.dx - details.delta.dy});
                           }
                         });
                       },
@@ -209,13 +159,13 @@ class _MousePadState extends State<MousePad> {
                   children: [
                     GestureDetector(
                       onTapDown: (_) {
-                        pressLeftButton();
+                        ControlRequests().sendComand('pressleft', null);
                       },
                       onTapUp: (_) {
-                        unPressLeftButton();
+                        ControlRequests().sendComand('unpressleft', null);
                       },
                       onPanCancel: () {
-                        unPressLeftButton();
+                        ControlRequests().sendComand('unpressleft', null);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -254,13 +204,13 @@ class _MousePadState extends State<MousePad> {
                     ),
                     GestureDetector(
                       onTapDown: (_) {
-                        pressRightButton();
+                        ControlRequests().sendComand('pressright', null);
                       },
                       onTapUp: (_) {
-                        unPressRightButton();
+                        ControlRequests().sendComand('unpressright', null);
                       },
                       onTapCancel: () {
-                        unPressRightButton();
+                        ControlRequests().sendComand('unpressright', null);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -296,14 +246,17 @@ class _MousePadState extends State<MousePad> {
                           onChanged: (value) {
                             setState(() {
                               if (previousKeyboardValue.length > value.length) {
-                                backSpace();
+                                ControlRequests().sendComand('backspace', null);
                               } else {
-                                sendKey(value[value.length - 1]);
+                                ControlRequests().sendComand(
+                                  'pressandunpresskey',
+                                  {"keyPressed": value[value.length - 1]},
+                                );
                               }
                             });
                           },
                           onSubmitted: (_) {
-                            enter();
+                            ControlRequests().sendComand('enter', null);
                           },
                         ),
                       ),
