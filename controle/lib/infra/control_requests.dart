@@ -6,7 +6,7 @@ class ControlRequests {
   ControlRequests();
 
   void sendComand(String route, Map? body) {
-    String baseUrl = "http://192.168.5.192:8000";
+    String baseUrl = "http://192.168.2.26:8000";
     if (body == null) {
       http.post(Uri.parse('${baseUrl}/${route}'));
     } else {

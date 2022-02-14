@@ -1,7 +1,4 @@
-import 'package:controle/pages/joystick.dart';
-import 'package:controle/components/joystick_2/mouse_controller.dart';
-import 'package:controle/pages/joystick_2.dart';
-import 'package:controle/pages/touchpad.dart';
+import 'package:controle/ui/pages/touchpad/touchpad.dart';
 import 'package:flutter/material.dart';
 
 void main() {

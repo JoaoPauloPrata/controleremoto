@@ -1,6 +1,6 @@
-import 'package:controle/components/joystick_1/arrows_buttons.dart';
-import 'package:controle/components/joystick_1/circle_buttons.dart';
-import 'package:controle/components/joystick_1/middles_buttons.dart';
+import 'package:controle/ui/components/joystick_1/arrows_buttons.dart';
+import 'package:controle/ui/components/joystick_1/circle_buttons.dart';
+import 'package:controle/ui/components/joystick_1/middles_buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

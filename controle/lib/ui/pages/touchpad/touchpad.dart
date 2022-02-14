@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:controle/infra/control_requests.dart';
-import 'package:controle/pages/joystick.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+
+import '../pages.dart';
 
 class MousePad extends StatefulWidget {
   MousePad({Key? key}) : super(key: key);
@@ -92,7 +94,6 @@ class _MousePadState extends State<MousePad> {
                       child: Listener(
                         onPointerMove: (details) {
                           setState(() {
-                            //Evitando que a função de mecher o mouse seja invocada fora da area do touchpad
                             if (details.localPosition.dx > 0 &&
                                 details.localPosition.dy > 0 &&
                                 details.localPosition.dy < (touchPadHeight) &&

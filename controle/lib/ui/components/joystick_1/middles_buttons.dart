@@ -1,5 +1,4 @@
 import 'package:controle/infra/control_requests.dart';
-import 'package:controle/pages/touchpad.dart';
 import 'package:flutter/material.dart';
 
 Column middleButtons(context) {

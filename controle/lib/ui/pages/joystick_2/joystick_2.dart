@@ -1,7 +1,7 @@
-import 'package:controle/components/joystick_2/arrows_buttons.dart';
-import 'package:controle/components/joystick_2/moove_analogic.dart';
-import 'package:controle/components/joystick_2/mouse_controller.dart';
-import 'package:controle/components/joystick_2/circle_buttons.dart';
+import 'package:controle/ui/components/joystick_2/arrows_buttons.dart';
+import 'package:controle/ui/components/joystick_2/moove_analogic.dart';
+import 'package:controle/ui/components/joystick_2/mouse_controller.dart';
+import 'package:controle/ui/components/joystick_2/circle_buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
