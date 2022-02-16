@@ -30,6 +30,16 @@ class Settings {
     var map = <String, dynamic>{
       'mouseSensitivity': mouseSensitivity,
       'scrollSensitivity': scrollSensitivity,
+      'leftButtonKey': leftButtonKey,
+      'rightButtonKey': rightButtonKey,
+      'downButtonKey': downButtonKey,
+      'upButtonKey': upButtonKey,
+      'startButtonKey': startButtonKey,
+      'selectButtonKey': selectButtonKey,
+      'upCircleButtonKey': upCircleButtonKey,
+      'leftCircleButtonKey': leftCircleButtonKey,
+      'rightCircleButtonKey': rightCircleButtonKey,
+      'downCircleButtonKey': downCircleButtonKey,
     };
     return map;
   }

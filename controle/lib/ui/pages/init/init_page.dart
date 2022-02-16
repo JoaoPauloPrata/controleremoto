@@ -1,3 +1,4 @@
+import 'package:controle/helpers/database_helper.dart';
 import 'package:controle/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,14 @@ class InitPage extends StatefulWidget {
 class _InitPageState extends State<InitPage> {
   @override
   Widget build(BuildContext context) {
+    List<String> _itens = [];
+    void loadData() async {
+      DatabaseHelper.insert(
+          'settings', {'id': 1, 'value': 'a', 'key': 'leftArrowButton'});
+      final dataList = await DatabaseHelper.getData('settings');
+    }
+
+    loadData();
     String joystick = 'assets/images/joystick.png';
     String volant = 'assets/images/volant.png';
     String settings = 'assets/images/settings.png';
