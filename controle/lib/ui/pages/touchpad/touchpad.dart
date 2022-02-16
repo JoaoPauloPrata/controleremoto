@@ -22,7 +22,7 @@ class _MousePadState extends State<MousePad> {
   Widget build(BuildContext context) {
     void _returnInit(BuildContext context) {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return InitPage();
+        return const InitPage();
       }));
     }
 

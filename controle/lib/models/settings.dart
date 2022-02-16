@@ -1,17 +1,4 @@
 class Settings {
-  double mouseSensitivity;
-  double scrollSensitivity;
-  String leftButtonKey;
-  String rightButtonKey;
-  String downButtonKey;
-  String upButtonKey;
-  String startButtonKey;
-  String selectButtonKey;
-  String upCircleButtonKey;
-  String leftCircleButtonKey;
-  String rightCircleButtonKey;
-  String downCircleButtonKey;
-
   Settings(
     this.mouseSensitivity,
     this.scrollSensitivity,
@@ -26,4 +13,39 @@ class Settings {
     this.rightCircleButtonKey,
     this.downCircleButtonKey,
   );
+  double mouseSensitivity;
+  double scrollSensitivity;
+  String leftButtonKey;
+  String rightButtonKey;
+  String downButtonKey;
+  String upButtonKey;
+  String startButtonKey;
+  String selectButtonKey;
+  String upCircleButtonKey;
+  String leftCircleButtonKey;
+  String rightCircleButtonKey;
+  String downCircleButtonKey;
+
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      'mouseSensitivity': mouseSensitivity,
+      'scrollSensitivity': scrollSensitivity,
+    };
+    return map;
+  }
+
+  fromMap(Map<String, dynamic> map) {
+    mouseSensitivity = map['mouseSensitivity'];
+    scrollSensitivity = map['scrollSensitivity'];
+    leftButtonKey = map['leftButtonKey'];
+    rightButtonKey = map['rightButtonKey'];
+    downButtonKey = map['downButtonKey'];
+    upButtonKey = map['upButtonKey'];
+    startButtonKey = map['startButtonKey'];
+    selectButtonKey = map['selectButtonKey'];
+    upCircleButtonKey = map['upCircleButtonKey'];
+    leftCircleButtonKey = map['leftCircleButtonKey'];
+    rightCircleButtonKey = map['rightButtonKey'];
+    downCircleButtonKey = map['downCircleButtonKey'];
+  }
 }
