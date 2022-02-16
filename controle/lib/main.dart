@@ -1,3 +1,4 @@
+import 'package:controle/ui/pages/init/init_page.dart';
 import 'package:controle/ui/pages/touchpad/touchpad.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,6 @@ class ControleRemoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MousePad();
+    return InitPage();
   }
 }
