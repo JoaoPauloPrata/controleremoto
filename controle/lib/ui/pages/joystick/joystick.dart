@@ -1,6 +1,7 @@
 import 'package:controle/ui/components/joystick_1/arrows_buttons.dart';
 import 'package:controle/ui/components/joystick_1/circle_buttons.dart';
 import 'package:controle/ui/components/joystick_1/middles_buttons.dart';
+import 'package:controle/ui/pages/init/init_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,12 +28,24 @@ class _JoysTickState extends State<JoysTick> {
 
   @override
   Widget build(BuildContext context) {
+    void _returnInit(BuildContext context) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        return InitPage();
+      }));
+    }
+
     bool isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: !isLandscape ? 50 : 0,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.settings))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                _returnInit(context);
+              },
+              icon: Icon(Icons.home))
+        ],
       ),
       body: Container(
         color: Colors.white,

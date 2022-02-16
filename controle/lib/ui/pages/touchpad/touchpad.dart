@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:controle/infra/control_requests.dart';
+import 'package:controle/ui/pages/init/init_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -19,9 +20,9 @@ class _MousePadState extends State<MousePad> {
   bool firstKeyboardTouch = false;
   @override
   Widget build(BuildContext context) {
-    void _selectPage(BuildContext context) {
+    void _returnInit(BuildContext context) {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return JoysTick();
+        return InitPage();
       }));
     }
 
@@ -66,14 +67,10 @@ class _MousePadState extends State<MousePad> {
         actions: [
           IconButton(
             onPressed: () {
-              _selectPage(context);
+              _returnInit(context);
             },
-            icon: Icon(Icons.gamepad),
+            icon: Icon(Icons.home),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.settings),
-          )
         ],
       ),
       body: Container(

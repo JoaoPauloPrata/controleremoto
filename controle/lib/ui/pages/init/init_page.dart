@@ -1,3 +1,4 @@
+import 'package:controle/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class InitPage extends StatefulWidget {
@@ -15,6 +16,14 @@ class _InitPageState extends State<InitPage> {
     String settings = 'assets/images/settings.png';
     String mouseAndKeyboard = 'assets/images/keyboard-and-mouse.png';
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.home),
+          ),
+        ],
+      ),
       body: Container(
         color: Colors.white,
         child: Column(
@@ -23,22 +32,22 @@ class _InitPageState extends State<InitPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                OptionCard(mouseAndKeyboard),
+                OptionCard(mouseAndKeyboard, MousePad()),
                 const SizedBox(
                   width: 30,
                 ),
-                OptionCard(joystick),
+                OptionCard(joystick, JoysTick()),
               ],
             ),
             const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                OptionCard(volant),
+                OptionCard(volant, Container()),
                 const SizedBox(
                   width: 30,
                 ),
-                OptionCard(settings),
+                OptionCard(settings, Container()),
               ],
             ),
           ],
@@ -49,11 +58,21 @@ class _InitPageState extends State<InitPage> {
 }
 
 class OptionCard extends StatelessWidget {
-  OptionCard(String this.image);
+  OptionCard(String this.image, Widget this.page);
+  Widget page;
   String image;
   @override
   Widget build(BuildContext context) {
+    void _selectPage(BuildContext context, Widget page) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        return page;
+      }));
+    }
+
     return GestureDetector(
+      onTap: () {
+        _selectPage(context, page);
+      },
       child: Card(
         elevation: 10,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
