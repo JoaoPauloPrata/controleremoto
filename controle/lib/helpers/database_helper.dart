@@ -10,14 +10,18 @@ class DatabaseHelper {
     return sql.openDatabase(
       path.join(dbPath + 'settings.db'),
       onCreate: (db, version) {
-        return db.execute(
-            'CREATE TABLE settings(id TEXT PRIMARY KEY, value TEXT, key TEXT )');
+        try {
+          return db.execute(
+              'CREATE TABLE settings(id TEXT PRIMARY KEY, button TEXT, keyPressed TEXT )');
+        } catch (err) {
+          print("BIZIU");
+        }
       },
       version: 1,
     );
   }
 
-  static Future<void> insert(String table, Map<String, dynamic> data) async {
+  static Future<void> insert(String table, Map<String, Object> data) async {
     final db = await DatabaseHelper.database();
     await db.insert(
       table,
