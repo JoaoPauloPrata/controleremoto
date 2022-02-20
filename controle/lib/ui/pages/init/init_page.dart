@@ -1,5 +1,6 @@
 import 'package:controle/helpers/database_helper.dart';
 import 'package:controle/ui/pages/pages.dart';
+import 'package:controle/ui/pages/steering/steering.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -34,10 +35,8 @@ class _InitPageState extends State<InitPage> {
       print(_itens.length);
     }
 
-    loadData();
-    print(_itens.length);
     String joystick = 'assets/images/joystick.png';
-    String volant = 'assets/images/volant.png';
+    String steering = 'assets/images/steering.png';
     String settings = 'assets/images/settings.png';
     String mouseAndKeyboard = 'assets/images/keyboard-and-mouse.png';
     return Scaffold(
@@ -45,7 +44,7 @@ class _InitPageState extends State<InitPage> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.settings),
           ),
         ],
       ),
@@ -65,16 +64,16 @@ class _InitPageState extends State<InitPage> {
               ],
             ),
             const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                OptionCard(volant, Container()),
-                const SizedBox(
-                  width: 30,
-                ),
-                OptionCard(settings, Container()),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     OptionCard(steering, Steering()),
+            //     const SizedBox(
+            //       width: 30,
+            //     ),
+            //     OptionCard(settings, Container()),
+            //   ],
+            // ),
           ],
         ),
       ),
