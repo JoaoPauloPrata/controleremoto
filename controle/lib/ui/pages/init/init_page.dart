@@ -21,8 +21,6 @@ class KeyProps {
 }
 
 class _InitPageState extends State<InitPage> {
-  String ip = "";
-
   @override
   Widget build(BuildContext context) {
     List<KeyProps> _itens = [];
@@ -56,25 +54,6 @@ class _InitPageState extends State<InitPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Text("Escaneie o qrcode para sincronizar."),
-                  ]),
-                  ElevatedButton(
-                      onPressed: () async {
-                        setState(() async {
-                          ip = await FlutterBarcodeScanner.scanBarcode(
-                              "#FFFFFF", "Cancelar", false, ScanMode.QR);
-                          url.baseUrl = ip;
-                        });
-                        print(url.baseUrl);
-                      },
-                      child: Text("Scanear")),
-                ],
-              ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -102,11 +81,16 @@ class _InitPageState extends State<InitPage> {
   }
 }
 
-class OptionCard extends StatelessWidget {
+class OptionCard extends StatefulWidget {
   OptionCard(String this.image, Widget this.page);
   Widget page;
   String image;
 
+  @override
+  State<OptionCard> createState() => _OptionCardState();
+}
+
+class _OptionCardState extends State<OptionCard> {
   @override
   Widget build(BuildContext context) {
     void _selectPage(BuildContext context, Widget page) {
@@ -117,7 +101,29 @@ class OptionCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        _selectPage(context, page);
+        if (url.baseUrl != "" && url.baseUrl != "-1") {
+          _selectPage(context, widget.page);
+        } else {
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: Text("Não sincronizado"),
+              content: Text(
+                  "Antes de começar a usar, você precisa escanear o qrCode."),
+              actions: [
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      setState(() async {
+                        url.baseUrl = await FlutterBarcodeScanner.scanBarcode(
+                            "#FFFFFF", "Cancelar", false, ScanMode.QR);
+                      });
+                    },
+                    child: Text("Escanear"))
+              ],
+            ),
+          );
+        }
       },
       child: Card(
         elevation: 10,
@@ -134,7 +140,7 @@ class OptionCard extends StatelessWidget {
               bottom: 25,
               left: 25,
               child: Image.asset(
-                image,
+                widget.image,
                 height: 100,
                 width: 100,
               ),
