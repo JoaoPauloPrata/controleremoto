@@ -1,7 +1,9 @@
-import 'package:controle/helpers/database_helper.dart';
+import 'package:controle/infra/database_helper.dart';
 import 'package:controle/ui/pages/pages.dart';
 import 'package:controle/ui/pages/steering/steering.dart';
 import 'package:flutter/material.dart';
+import 'package:controle/infra/base_url.dart' as url;
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:sqflite/sqflite.dart';
 
 class InitPage extends StatefulWidget {
@@ -19,6 +21,8 @@ class KeyProps {
 }
 
 class _InitPageState extends State<InitPage> {
+  String ip = "";
+
   @override
   Widget build(BuildContext context) {
     List<KeyProps> _itens = [];
@@ -32,7 +36,6 @@ class _InitPageState extends State<InitPage> {
             (data) => KeyProps(data['id'], data['value'], data['key']),
           )
           .toList();
-      print(_itens.length);
     }
 
     String joystick = 'assets/images/joystick.png';
@@ -49,34 +52,52 @@ class _InitPageState extends State<InitPage> {
         ],
       ),
       body: Container(
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                OptionCard(mouseAndKeyboard, MousePad()),
-                const SizedBox(
-                  width: 30,
-                ),
-                OptionCard(joystick, JoysTick()),
-              ],
-            ),
-            const SizedBox(height: 30),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     OptionCard(steering, Steering()),
-            //     const SizedBox(
-            //       width: 30,
-            //     ),
-            //     OptionCard(settings, Container()),
-            //   ],
-            // ),
-          ],
-        ),
-      ),
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Text("Escaneie o qrcode para sincronizar."),
+                  ]),
+                  ElevatedButton(
+                      onPressed: () async {
+                        setState(() async {
+                          ip = await FlutterBarcodeScanner.scanBarcode(
+                              "#FFFFFF", "Cancelar", false, ScanMode.QR);
+                          url.baseUrl = ip;
+                        });
+                        print(url.baseUrl);
+                      },
+                      child: Text("Scanear")),
+                ],
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  OptionCard(mouseAndKeyboard, MousePad()),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  OptionCard(joystick, JoysTick()),
+                ],
+              ),
+              const SizedBox(height: 30),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     OptionCard(steering, Steering()),
+              //     const SizedBox(
+              //       width: 30,
+              //     ),
+              //     OptionCard(settings, Container()),
+              //   ],
+              // ),
+            ],
+          )),
     );
   }
 }
@@ -85,6 +106,7 @@ class OptionCard extends StatelessWidget {
   OptionCard(String this.image, Widget this.page);
   Widget page;
   String image;
+
   @override
   Widget build(BuildContext context) {
     void _selectPage(BuildContext context, Widget page) {
